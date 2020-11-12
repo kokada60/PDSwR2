@@ -70,7 +70,11 @@ median_income_table <- readRDS("Custdata/median_income.RDS")
 training_prepared <- training_prepared %>% left_join(., median_income_table, by="state_of_res") 
 training_prepared <- training_prepared[, income_normalized := income/median_income]
 
+tr_pr2 <- customer_data[!is.na(income), lapply(.SD, median), by="state_of_res", .SDcols="income"] #%>% left_join(., median_income_table, by="state_of_res")
+identical(tr_pr2[, median_income], tr_pr2[, income])
+summary(custdata[state_of_res=="Illinois", income])
 
+customer_data[state_of_res=="Illinois", income] -> v2
 
 
 
